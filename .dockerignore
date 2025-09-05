@@ -1,0 +1,111 @@
+# Docker忽略文件
+# Author: Corey (lijingfan@pku.org.cn)
+
+# Python相关
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 虚拟环境
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE和编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 日志文件
+*.log
+logs/*.log
+
+# 数据库文件 (在容器中重新创建)
+database/*.db
+database/*.db-journal
+database/backup/*.db
+
+# 临时文件
+*.tmp
+*.temp
+.cache/
+.pytest_cache/
+
+# Git相关
+.git/
+.gitignore
+
+# Docker相关
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# 文档
+*.md
+docs/
+
+# 测试相关
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+
+# 脚本文件 (清理脚本等)
+scripts/clean_*.py
+scripts/test_*.py
+scripts/find_*.py
+scripts/verify_*.py
+scripts/force_*.py
+
+# 备份文件
+*.bak
+*.backup
+
+# 配置文件 (敏感信息)
+config/local_settings.py
+.env
+.env.local
+.env.production
+
+# Selenium相关
+chromedriver
+geckodriver
+*.exe
+
+# 其他
+*.pid
+*.seed
+*.pid.lock
+.npm
+node_modules/

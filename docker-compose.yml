@@ -1,0 +1,75 @@
+# AI股票分析系统 Docker Compose配置
+# Author: Corey (lijingfan@pku.org.cn)
+# Version: 1.0
+# 适用于服务器部署
+
+services:
+  ai-stock:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-stock-system
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      # 数据持久化 (使用相对路径)
+      - ./database:/app/database
+      - ./logs:/app/logs
+      - ./data:/app/data
+      # 配置文件挂载
+      - ./config/settings.py:/app/config/settings.py:ro
+    environment:
+      # 基本环境变量
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+      - TZ=Asia/Shanghai
+      
+      # Flask配置
+      - FLASK_ENV=production
+      - FLASK_DEBUG=0
+      
+      # Chrome配置 (用于Selenium)
+      - DISPLAY=:99
+      - CHROME_BIN=/usr/bin/google-chrome
+      - CHROME_PATH=/usr/local/bin/chromedriver
+      
+      # 数据库路径 (容器内相对路径)
+      - DATABASE_PATH=/app/database/ai_stock.db
+      - DATABASE_BACKUP_DIR=/app/database/backup
+      - LOG_DIR=/app/logs
+
+    # 环境变量文件
+    env_file:
+      - .env
+    
+    # 健康检查
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/stats"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # 资源限制
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+
+    # 日志配置
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+    # 安全配置
+    security_opt:
+      - no-new-privileges:true
+
+
